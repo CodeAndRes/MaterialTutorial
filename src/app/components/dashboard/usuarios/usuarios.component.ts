@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -21,7 +22,7 @@ export class UsuariosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private _usuarioService: UsuarioService) { }
+  constructor(private _usuarioService: UsuarioService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -44,6 +45,12 @@ export class UsuariosComponent implements OnInit {
 
   eliminarUsuario(index: number){
     this._usuarioService.eliminarUsuario(index);
+    this._snackBar.open('El Usuario fue eliminado con exito!!', '', {
+      duration: 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
     this.cargarUsuarios();
   }
+
 }
